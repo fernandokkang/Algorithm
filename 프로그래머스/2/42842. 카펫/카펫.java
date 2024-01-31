@@ -4,7 +4,7 @@ class Solution {
         
         int sum = brown + yellow;
         
-        for(int i = 3; i < sum / 2; i++) {
+        for(int i = 3; i <= sum / 3; i++) {
             
             int j = sum / i;
             
