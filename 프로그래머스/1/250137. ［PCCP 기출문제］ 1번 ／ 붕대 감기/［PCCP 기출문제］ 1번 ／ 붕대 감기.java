@@ -1,39 +1,26 @@
 class Solution {
     public int solution(int[] bandage, int health, int[][] attacks) {
-        int answer = 0;
-        
-        int a_idx = 0;
-        int h_idx = 0;
-        int max = health;
-        
-        for(int i=1; i<=attacks[attacks.length-1][0]; i++) {
-            
-            if(attacks[a_idx][0] == i) {
-                
-                health -= attacks[a_idx][1];
-                if(health <= 0) {
-                    return -1;
-                }
-                
-                a_idx++;
-                h_idx = 0;
-                continue;
+        int cnt = bandage[0]; // 추가 체력 기준
+        int now = health; // 현재 체력
+        int std = 0; // 마지막으로 공격당한 시간
+
+        int v1, v2; // 추가 체력 받을 수 있나?
+        for (int[] atk: attacks) {
+            if (now <= 0) {
+                return -1;
             }
-            
-            health += bandage[1];
-            h_idx++;
-            
-            if(bandage[0] == h_idx) {
-                
-                health += bandage[2];
-                h_idx = 0;
-            }
-            
-            if(health > max) {
-                health = max;
-            }
-        }
-        
-        return health;
+
+            v1 = atk[0] - std - 1; // 시간 차이
+            v2 = v1 / cnt; // 추가 체력 회수
+
+            // 맞기 직전까지의 체력 정산
+            std = atk[0];
+            now = Math.min(health, now + (v1 * bandage[1]));
+            now = Math.min(health, now + (v2 * bandage[2]));
+
+            now -= atk[1];
+        }        
+
+        return now <= 0 ? -1 : now;
     }
 }
