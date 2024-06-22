@@ -11,21 +11,21 @@ class Solution {
         int anwer = 0;
         
         map = new HashMap<>();
-        dfs("", 0);
+        dfs(word, "", 0);
         
         return map.get(word);
     }
     
-    public void dfs(String word, int len) {
+    public void dfs(String target, String word, int len) {
         
-        if(len == 5) {
+        if(len == 5 || target.equals(word)) {
             return;
         }
         
         for(int i=0; i<letters.length; i++) {
             
             map.put(word + letters[i], idx++);
-            dfs(word + letters[i], len + 1);
+            dfs(target, word + letters[i], len + 1);
         }
     }
 }
